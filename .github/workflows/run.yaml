@@ -1,0 +1,32 @@
+name: build
+
+on:
+  workflow_dispatch:
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+
+      - run: |
+          yarn
+          node ./mybuild/build.js
+          
+
+      - name: save
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: |
+            dist
